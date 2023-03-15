@@ -1,0 +1,14 @@
+<app-teacher *ngIf="sidebar === 'Teacher'"></app-teacher>
+<app-teacher-exams *ngIf="sidebar === 'TeacherExams'"></app-teacher-exams>
+<app-teacher-students
+  *ngIf="sidebar === 'TeacherStudents'"
+></app-teacher-students>
+<app-principal *ngIf="sidebar === 'Principal'"></app-principal>
+<app-principal-teachers
+  *ngIf="sidebar === 'PrincipalTeachers'"
+></app-principal-teachers>
+<app-principal-students
+  *ngIf="sidebar === 'PrincipalStudents'"
+></app-principal-students>
+<app-student *ngIf="sidebar === 'Student'"></app-student>
+<app-student-exams *ngIf="sidebar === 'StudentExams'"></app-student-exams>

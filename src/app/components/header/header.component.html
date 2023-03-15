@@ -1,0 +1,10 @@
+<div class="flex justify-between items-center px-3">
+  <img src="../../favicon.ico" class="w-10 cursor-pointer" (click)="goHome()" />
+  <button
+    *ngIf="user"
+    (click)="signout()"
+    class="bg-red-400 rounded-md px-3 py-2 text-white shadow-md"
+  >
+    Sign out
+  </button>
+</div>

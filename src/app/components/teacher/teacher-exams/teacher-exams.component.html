@@ -1,0 +1,150 @@
+<app-teacher-former-exam
+  *ngIf="action === 'VIEW'"
+  [examId]="examId"
+></app-teacher-former-exam>
+<app-teacher-new-exam
+  *ngIf="action === 'NEW'"
+  [fakeId]="fakeId || getRandom()"
+></app-teacher-new-exam>
+<div class="flex mt-5" *ngIf="action === 'LIST'">
+  <div class="fixed bottom-3 right-3 md:right-5">
+    <button
+      (click)="newExam()"
+      class="bg-blue-500 text-center text-white px-4 py-3 rounded-full z-50"
+    >
+      <fa-icon [icon]="faPlus"></fa-icon>
+    </button>
+  </div>
+  <app-sidebar [current]="'Exams'" [role]="'Teacher'"></app-sidebar>
+  <div class="px-2 md:px-6 flex-1">
+    <h1 class="text-2xl md:text-3xl font-bold">Exams</h1>
+    <div class="mt-10">
+      <div
+        class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2"
+      >
+        <input
+          [(ngModel)]="search"
+          type="text"
+          placeholder="Search any exam..."
+          class="focus:border-blue-500 flex-1 shadow-md transition duration-300 ease-in outline-none px-5 py-2 w-full md:w-[70%] mx-auto border border-gray-400 rounded-md"
+        />
+        <button
+          (click)="loadExams()"
+          class="flex-1 bg-blue-500 rounded-md px-3 py-2 text-white shadow-md"
+        >
+          Search
+        </button>
+      </div>
+      <div class="mt-5">
+        <div class="mb-2 rounded-md bg-gray-200 text-gray-600 px-5 py-4">
+          <h2>EXAM NAME - START TIME</h2>
+        </div>
+        <div>
+          <h2 class="font-semibold text-lg">Saved Exams</h2>
+        </div>
+        <div
+          *ngFor="let exam of savedExams; let i = index"
+          [attr.data-index]="i"
+          [class.odd]="i % 2 === 1"
+          class="flex cursor-pointer justify-between items-center hover:bg-gray-100 rounded-md text-gray-600 px-5 mb-2"
+        >
+          <div class="flex-1 py-4" (click)="editSavedExam(exam.fakeId)">
+            <h2 class="text-black text-lg font-bold">
+              {{ exam.name }} {{ exam.rescheduled ? " (rescheduled)" : "" }}
+            </h2>
+            <h4 class="text-sm">
+              {{ exam.startTime ? displayDate(exam.startTime) : "No Date Set" }}
+              -
+              {{
+                exam.startTime && exam.duration
+                  ? toDate(
+                      toDate(exam.startTime).getTime() + exam.duration * 60000
+                    ).toLocaleTimeString()
+                  : "No Duration Set"
+              }}
+            </h4>
+          </div>
+          <div class="">
+            <fa-icon
+              [icon]="faTrash"
+              (click)="deleteSavedExam(exam.fakeId)"
+              class="hover:text-red-500"
+            ></fa-icon>
+          </div>
+        </div>
+        <div>
+          <h2 class="font-semibold text-lg">Current Exams</h2>
+        </div>
+        <div
+          *ngFor="let exam of currentExams; let i = index"
+          [attr.data-index]="i"
+          [class.odd]="i % 2 === 1"
+          class="cursor-pointer hover:bg-gray-100 rounded-md text-gray-600 px-5 py-4 flex-col mb-2"
+        >
+          <h2 class="text-black text-lg font-bold">
+            {{ exam.name }} {{ exam.rescheduled ? " (rescheduled)" : "" }}
+          </h2>
+          <h4 class="text-sm">
+            {{ toDate(exam.startTime).toDateString() }}
+            {{ toDate(exam.startTime).toLocaleTimeString() }} -
+            {{
+              toDate(
+                toDate(exam.startTime).getTime() + exam.duration * 60000
+              ).toLocaleTimeString()
+            }}
+          </h4>
+        </div>
+        <div>
+          <h2 class="font-semibold text-lg">Scheduled Exams</h2>
+        </div>
+        <div
+          *ngFor="let exam of exams; let i = index"
+          [attr.data-index]="i"
+          [class.odd]="i % 2 === 1"
+          class="cursor-pointer hover:bg-gray-100 rounded-md text-gray-600 px-5 py-4 flex-col mb-2"
+        >
+          <h2 class="text-black text-lg font-bold">
+            {{ exam.name }} {{ exam.rescheduled ? " (rescheduled)" : "" }}
+          </h2>
+          <h4 class="text-sm">
+            {{ toDate(exam.startTime).toDateString() }}
+            {{ toDate(exam.startTime).toLocaleTimeString() }} -
+            {{
+              toDate(
+                toDate(exam.startTime).getTime() + exam.duration * 60000
+              ).toLocaleTimeString()
+            }}
+          </h4>
+        </div>
+        <div>
+          <h2 class="font-semibold text-lg">Past Exams</h2>
+        </div>
+        <div *ngFor="let term of terms">
+          <p class="font-bold text-lg cursor-pointer">
+            {{ term.startYear }}/{{ term.endYear }} Term {{ term.term }}
+          </p>
+          <div
+            *ngFor="let exam of getFormerExamsForTerm(term.id); let i = index"
+            (click)="toResultPage(exam.id)"
+            [attr.data-index]="i"
+            [class.odd]="i % 2 === 1"
+            class="cursor-pointer hover:bg-gray-100 rounded-md text-gray-600 px-5 py-4 flex-col mb-2"
+          >
+            <h2 class="text-black text-lg font-bold">
+              {{ exam.name }} {{ exam.rescheduled ? " (rescheduled)" : "" }}
+            </h2>
+            <h4 class="text-sm">
+              {{ toDate(exam.startTime).toDateString() }}
+              {{ toDate(exam.startTime).toLocaleTimeString() }} -
+              {{
+                toDate(
+                  toDate(exam.startTime).getTime() + exam.duration * 60000
+                ).toLocaleTimeString()
+              }}
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

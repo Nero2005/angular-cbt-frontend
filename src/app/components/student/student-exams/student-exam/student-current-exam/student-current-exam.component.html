@@ -1,0 +1,111 @@
+<div class="flex mt-5" *ngIf="result">
+  <h1 class="font-bold text-xl">You have already written this exam</h1>
+</div>
+<div class="flex mt-5" *ngIf="!result">
+  <div class="fixed top-28 right-10">
+    <span [class.hurry]="timeLeft <= 10" class="font-bold text-lg">
+      {{ toFloor(timeLeft / 60) }} m {{ timeLeft % 60 }} s
+    </span>
+  </div>
+  <div class="px-2 md:px-6 flex-1">
+    <h1 class="text-xl md:text-3xl font-bold">
+      {{ exam!.name }} {{ exam!.rescheduled ? " (rescheduled)" : "" }}
+    </h1>
+    <div class="mt-5">
+      <div class="flex flex-col">
+        <h2 class="text-xl md:text-2xl font-bold">Student Details</h2>
+        <p>
+          Name: <span class="font-semibold">{{ user?.name }}</span>
+        </p>
+        <p>
+          Class:
+          <span class="font-semibold">
+            {{ exam!.subjectClass.class.className }}
+          </span>
+        </p>
+        <p>
+          Subject:
+          <span class="font-semibold">
+            {{ exam!.subjectClass.subject.name }}
+          </span>
+        </p>
+        <p>
+          Term:
+          <span class="font-semibold">
+            {{ exam!.term.startYear }}/{{ exam!.term.endYear }} Term
+            {{ exam!.term.term }}
+          </span>
+        </p>
+      </div>
+      <div class="mt-5">
+        <h3 class="font-bold text-xl md:text-2xl mb-2">Answer all questions</h3>
+        <div class="space-y-2">
+          <div
+            *ngFor="let q of exam!.questions; let i = index"
+            [attr.data-index]="i"
+            class="flex flex-col space-y-2 rounded-md border-blue-400 p-2 border-2"
+          >
+            <p>
+              <span class="font-semibold">{{ i! + 1 }}.</span>
+              {{ q.question }}
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+              <div
+                class="hover:bg-blue-400 hover:text-white transition duration-300 ease-in w-full cursor-pointer border-blue-400 border px-3 py-1 rounded"
+                [class.selected-option]="selected[q.id] === 'A'"
+                (click)="setSelected(q.id, 'A')"
+              >
+                <input
+                  defaultChecked
+                  type="radio"
+                  class="hidden"
+                  name="subjectClass"
+                />
+                <span>{{ q.optionA }}</span>
+              </div>
+              <div
+                [class.selected-option]="selected[q.id] === 'B'"
+                (click)="setSelected(q.id, 'B')"
+                class="hover:bg-blue-400 hover:text-white transition duration-300 ease-in w-full cursor-pointer border-blue-400 border px-3 py-1 rounded"
+              >
+                <input
+                  defaultChecked
+                  type="radio"
+                  class="hidden"
+                  name="subjectClass"
+                />
+                <span>{{ q.optionB }}</span>
+              </div>
+              <div
+                [class.selected-option]="selected[q.id] === 'C'"
+                (click)="setSelected(q.id, 'C')"
+                class="hover:bg-blue-400 hover:text-white transition duration-300 ease-in w-full cursor-pointer border-blue-400 border px-3 py-1 rounded"
+              >
+                <input
+                  defaultChecked
+                  type="radio"
+                  class="hidden"
+                  name="subjectClass"
+                />
+                <span>{{ q.optionC }}</span>
+              </div>
+              <div
+                [class.selected-option]="selected[q.id] === 'D'"
+                (click)="setSelected(q.id, 'D')"
+                class="hover:bg-blue-400 hover:text-white transition duration-300 ease-in w-full cursor-pointer border-blue-400 border px-3 py-1 rounded"
+              >
+                <input
+                  defaultChecked
+                  type="radio"
+                  class="hidden"
+                  name="subjectClass"
+                />
+                <span>{{ q.optionD }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

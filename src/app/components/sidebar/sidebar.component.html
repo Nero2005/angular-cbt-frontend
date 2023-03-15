@@ -1,0 +1,52 @@
+<div class="min-h-screen border-r pr-2 md:pr-6">
+  <ul class="list-none">
+    <a routerLink="/dashboard" (click)="setCurrent('Dashboard')">
+      <li
+        [class.current]="current === 'Dashboard'"
+        class="my-1 cursor-pointer border-b border-white px-6 md:pr-12 py-3 hover:bg-blue-100 hover:text-blue-400 hover:font-semibold hover:rounded-md"
+      >
+        <span class="hidden md:inline-flex">Overview</span>
+        <img src="../../assets/dashboardIcon.jpeg" class="w-6 h-6 md:hidden" />
+      </li>
+    </a>
+    <a
+      routerLink="/dashboard"
+      (click)="setCurrent('Teachers')"
+      *ngIf="role === 'Principal'"
+    >
+      <li
+        [class.current]="current === 'Teachers'"
+        class="my-1 cursor-pointer border-b border-white px-6 md:pr-12 py-3 hover:bg-blue-100 hover:text-blue-400 hover:font-semibold hover:rounded-md"
+      >
+        <span class="hidden md:inline-flex">Teachers</span>
+        <img src="../../assets/teacherIcon.png" class="w-6 h-6 md:hidden" />
+      </li>
+    </a>
+    <a
+      routerLink="/dashboard"
+      (click)="setCurrent('Exams')"
+      *ngIf="role === 'Teacher' || role === 'Student'"
+    >
+      <li
+        [class.current]="current === 'Exams'"
+        class="my-1 cursor-pointer border-b border-white px-6 md:pr-12 py-3 hover:bg-blue-100 hover:text-blue-400 hover:font-semibold hover:rounded-md"
+      >
+        <span class="hidden md:inline-flex">Exams</span>
+        <img src="../../assets/examIcon.png" class="w-6 h-6 md:hidden" />
+      </li>
+    </a>
+    <a
+      routerLink="/dashboard"
+      (click)="setCurrent('Students')"
+      *ngIf="role === 'Teacher' || role === 'Principal'"
+    >
+      <li
+        [class.current]="current === 'Students'"
+        class="my-1 cursor-pointer border-b border-white px-6 md:pr-12 py-3 hover:bg-blue-100 hover:text-blue-400 hover:font-semibold hover:rounded-md"
+      >
+        <span class="hidden md:inline-flex">Students</span>
+        <img src="../../assets/studentIcon.png" class="w-6 h-6 md:hidden" />
+      </li>
+    </a>
+  </ul>
+</div>

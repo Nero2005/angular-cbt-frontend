@@ -1,0 +1,14 @@
+<app-student-former-exam
+  *ngIf="result && currentExam !== undefined"
+  [exam]="currentExam"
+></app-student-former-exam>
+<app-student-current-exam
+  *ngIf="!result && timeLeft <= 0 && currentExam !== undefined"
+  [exam]="currentExam"
+></app-student-current-exam>
+<app-student-scheduled-exam
+  *ngIf="!result && timeLeft > 0 && currentExam !== undefined"
+  [exam]="currentExam"
+  [timeLeft]="timeLeft"
+></app-student-scheduled-exam>
+<div *ngIf="currentExam === undefined">Loading...</div>
